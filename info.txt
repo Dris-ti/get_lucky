@@ -1,2 +1,1 @@
-Dristi, 123, 30
-Refat, 111, 0
+Dristi, 123, 70
