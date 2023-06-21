@@ -3,6 +3,7 @@ import random as ran
 score = 0
 bst = 0
 cur_user = {}
+run_game = True
 
 
 # ------------------------------
@@ -31,7 +32,7 @@ def write_info():
     print()
 
     with open("info.txt", "a") as file:
-        file.write(f"{user_name}, {user_pass}, {score}")
+        file.write(f"{user_name}, {user_pass}, {score}\n")
 
     check_info(user_name, user_pass)
 
@@ -74,14 +75,23 @@ def check_guess(n, p):
     global cur_user
     global score
     global bst
+    global run_game
     sym = ["*", "#", "$"]
+    stop = 'X'
     fst = ""
     snd = ""
     trd = ""
     line_num = 0
 
-    while snd not in sym:
+    while snd not in sym and stop:
+        print("To stop, press 'X'")
         snd = str(input("Enter symbol [*, #, $] : "))
+
+        if snd == 'X' or snd == 'x':
+            run_game = False
+            display_score(n, p)
+            return
+
         print()
         fst = ran.choice(sym)
         trd = ran.choice(sym)
@@ -124,29 +134,12 @@ def check_guess(n, p):
 # ------------------------------
 
 
-def play_again():
-    again = ""
-    yn = ["Y", "N"]
-
-    while again not in yn:
-        again = str(input("Play again? [Y/N]: ")).upper()
-        print()
-
-    if again == "Y":
-        return True
-    else:
-        return False
-
-
-# ------------------------------
-
-
 def display_score(n, p):
     global score
     global cur_user
     global bst
 
-    if play_again():
+    if run_game:
         check_guess(n, p)
     else:
         print("\n--------------------------------")
